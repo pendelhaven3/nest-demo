@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en" data-ng-app="NestApp">
+<head>
+	<title>Camera Detected Movements</title>
+  <!--
+  Copyright 2014 Nest Labs Inc. All Rights Reserved.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  -->
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../stylesheets/bootstrap.min.css" rel="stylesheet">
+    <style>
+		@media (min-width: 768px) {
+		  .container {
+		    width: 730px;
+		  }
+		}
+		.table th, .table td {
+			text-align: center;
+		}
+		.main-title {
+			font-weight: bold;
+			color: red;
+			text-align: center;
+		}
+    </style>
+</head>
+<body data-ng-controller="MainController">
+
+<div class="container">
+
+  <h1 class="main-title">Detected Movements</h1>
+  <h2 class="text-center" id="cameraNameLong">Camera</h2>
+  <h3 class="text-center" id="date"></h3>
+  
+  <table class="table main-table">
+    <thead>
+      <tr>
+        <th>Time Span</th>
+        <th>Duration</th>
+        <th>Picture</th>
+      </tr>
+    </thead>
+    <tbody>
+	  <tr data-ng-repeat="event in events">
+		<td>{{event.timeSpan}}</td>
+		<td>{{event.duration}}</td>
+		<td>
+			<a href="#" data-ng-click="viewImage($index)">
+				<img data-ng-src="{{event.image_url}}" width="60" height="60" />
+			</a>
+			<h6>Click image to enlarge</h6>
+		</td>
+	  </tr>
+    </tbody>
+  </table>
+  
+	<!-- Modal -->
+	<div id="imageModal" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
+	
+	    <!-- Modal content-->
+	    <div class="modal-content text-center">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	        <h4 class="modal-title" id="eventTimeSpan"></h4>
+	      </div>
+	      <div class="modal-body">
+	      	<img id="eventImage" width="400" height="400" />
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	      </div>
+	    </div>
+	
+	  </div>
+	</div>
+  
+</div>
+
+  <!-- bower:js -->
+  <script src="../bower_components/jquery/dist/jquery.js"></script>
+  <script src="../bower_components/jquery-cookie/jquery.cookie.js"></script>
+  <script src="../bower_components/firebase/firebase.js"></script>
+  <script src="../bower_components/angularjs/angular.js"></script>
+  <script src="../bower_components/jquery-dateFormat/dist/jquery-dateFormat.js"></script>
+  <script src="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
+  <!-- endbower -->
+  <script src="/javascript/nest.js"></script>
+</body>
+</html>

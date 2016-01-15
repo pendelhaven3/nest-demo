@@ -1,0 +1,12 @@
+{
+  "name": "Control",
+  "dependencies": {
+    "jquery": "= 2.1.1",
+    "jquery-cookie": "= 1.4.1",
+    "firebase": "= 1.0.15",
+    "angularjs": "= 1.4.8",
+    "jquery-dateFormat": "~1.0.2",
+    "bootstrap": "~3.3.6"
+  },
+  "private": true
+}
