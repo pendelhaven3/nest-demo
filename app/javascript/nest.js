@@ -61,7 +61,6 @@ dataRef.on('value', function (snapshot) {
   var structure = firstChild(data.structures);
   var camera = data.devices.cameras[structure.cameras[0]];
 
-  camera.device_id = structure.cameras[0];
   $('#cameraNameLong').html(camera.name_long);
   
   // On first load, do not display last event from camera
