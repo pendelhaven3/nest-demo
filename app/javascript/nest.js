@@ -16,9 +16,8 @@
 /* globals $, Firebase */
 'use strict';
 
-var nestToken  = $.cookie('nest_token'),
-    camera = {},
-    structure  = {};
+var nestToken  = $.cookie('nest_token');
+var firstLoad = true;
 
 if (nestToken) { // Simple check for token
 
@@ -59,15 +58,20 @@ dataRef.on('value', function (snapshot) {
   var data = snapshot.val();
 
   // For simplicity, we only care about the first camera in the first structure
-  structure = firstChild(data.structures);
-  camera = data.devices.cameras[structure.cameras[0]];
+  var structure = firstChild(data.structures);
+  var camera = data.devices.cameras[structure.cameras[0]];
 
   camera.device_id = structure.cameras[0];
   $('#cameraNameLong').html(camera.name_long);
   
-  var scope = angular.element(document.body).scope();
-  scope.addEvent(camera.last_event);
-  scope.$apply();
+  // On first load, do not display last event from camera
+  if (!firstLoad) {
+    var scope = angular.element(document.body).scope();
+    scope.addEvent(camera.last_event);
+    scope.$apply();
+  } else {
+  	firstLoad = false;
+  }
 });
 
 angular.module('NestApp', []).controller('MainController', function($scope) {
@@ -97,6 +101,8 @@ angular.module('NestApp', []).controller('MainController', function($scope) {
   	  	duration: getDuration(event),
   	  	image_url: event.image_url
   	};
+  
+  	// check if event is new or just an update
   	if ($scope.events.length > 0 && $scope.events[0].start_time === newEvent.start_time) {
 			$scope.events[0] = newEvent;
   	} else {
@@ -110,3 +116,6 @@ angular.module('NestApp', []).controller('MainController', function($scope) {
   	}
   }
 });
+
+//hide main table first so that ng-repeat rows not yet processed by angular will not be seen
+$('#main-table').show();

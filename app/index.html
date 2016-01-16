@@ -45,7 +45,8 @@
   <h2 class="text-center" id="cameraNameLong">Camera</h2>
   <h3 class="text-center" id="date"></h3>
   
-  <table class="table main-table">
+  <!-- hide main table first so that ng-repeat rows not yet processed by angular will not be seen -->
+  <table id="main-table" class="table" style="display:none">
     <thead>
       <tr>
         <th>Time Span</th>
